@@ -36,12 +36,11 @@
 <script setup lang="ts">
 import { NDataTable, NAlert, NIcon, useNotification, DataTableColumns, NButton, NCard, NSpace, NGrid, NGridItem } from "naive-ui";
 import { InformationCircle, Open } from "@vicons/ionicons5";
-import { computed, inject, reactive, Ref, toRefs } from "vue";
+import { computed, inject, reactive, ref, Ref, toRefs, watch } from "vue";
 import {StatisticsData} from "@silveredgold/beta-shared/transport";
-import { useEventEmitter } from "../services";
-import { useBackendTransport } from "../transport";
+import { useEventEmitter } from "../messaging";
 import { toTitleCase } from "@silveredgold/beta-shared";
-import { INavigationService } from ".";
+import { INavigationService, useBackendTransport } from ".";
 
 const props = defineProps<{
     statistics: StatisticsData,
@@ -84,7 +83,8 @@ const pagination = reactive({
       }
     })
 
-const columns: DataTableColumns<SiteStatistic> = [
+
+const defaultColumns: DataTableColumns<SiteStatistic> = [
     {
         title: 'Domain',
         key: 'domain'
@@ -99,12 +99,17 @@ const columns: DataTableColumns<SiteStatistic> = [
     }
 ];
 
-var firstSite = Object.values(statistics.value).find(s => !!s.categories);
-if (firstSite) {
-    for (const category of Object.keys(firstSite.categories)) {
-        columns.push({title: toTitleCase(category), key: 'categories.' + category});
+const columns: Ref<DataTableColumns<SiteStatistic>> = ref(defaultColumns);
+
+watch(statistics, (newStats) => {
+    columns.value = defaultColumns;
+    const firstSite = Object.values(statistics.value).find(s => !!s.categories);
+    if (firstSite) {
+        for (const category of Object.keys(firstSite.categories)) {
+            columns.value.push({title: toTitleCase(category), key: 'categories.' + category});
+        }
     }
-}
+});
 
 
 const enabled = computed(() => statistics.value && Object.keys(statistics.value).length > 0);

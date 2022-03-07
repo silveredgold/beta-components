@@ -30,18 +30,15 @@ import { watch, computed, toRefs, inject } from 'vue';
 import { NCard, useNotification, NThing, NGrid, NGridItem, NSpace, NButton, NText, NIcon, NPopover } from "naive-ui";
 import { HelpCircleOutline } from "@vicons/ionicons5";
 import { IPreferences } from '@silveredgold/beta-shared/preferences';
-import { FileSystemClient, useEventEmitter, useOptionalNotification } from '../services';
-
-interface Props {
-    preferences: IPreferences,
-    compact?: boolean
-}
+import { FileSystemClient } from '../services';
+import { PreferencesProps, useOptionalNotification } from '.';
+import { useEventEmitter } from "../messaging";
 
 const emit = defineEmits<{
     (e: 'imported', preferences: IPreferences): void
 }>();
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<PreferencesProps>(), {
     compact: false
 });
 

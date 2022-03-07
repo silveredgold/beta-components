@@ -120,7 +120,8 @@
 import { inject, toRefs, watch } from 'vue';
 import { NCard, useNotification, NTabs, NTabPane, NSpace, NForm, NFormItem, NSelect, NInputGroup, NSlider, NThing, NCheckbox, NPopover, NIcon } from "naive-ui";
 import { HelpCircleOutline } from "@vicons/ionicons5";
-import { IPreferences, CensorType, BodyCensorModes, getCensorTypes, CensorMode } from '@silveredgold/beta-shared/preferences';
+import { IPreferences, CensorType, getCensorTypes } from '@silveredgold/beta-shared/preferences';
+import type { BodyCensorModes, CensorMode } from '@silveredgold/beta-shared/preferences';
 import { updateUserPrefs } from "../messaging";
 import { toTitleCase } from "@silveredgold/beta-shared";
 

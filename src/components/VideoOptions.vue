@@ -42,12 +42,9 @@ import { watch, computed, toRefs, inject } from 'vue';
 import { NCard, NRadioGroup, NRadioButton, NThing, NSpace, NCheckbox, NSlider } from "naive-ui";
 import { IPreferences } from '@silveredgold/beta-shared/preferences';
 import { updateUserPrefs } from '../messaging';
-interface Props {
-    preferences: IPreferences,
-    compact: boolean
-}
+import { PreferencesProps } from '.';
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<PreferencesProps>(), {
     compact: false
 });
 

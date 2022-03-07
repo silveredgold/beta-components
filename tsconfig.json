@@ -1,17 +1,20 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2019",
     "module": "esnext",
+    "useDefineForClassFields": true,
+    "outDir": "lib",
     "strict": true,
     "declaration": true,
-    "declarationDir": "lib",
+    "declarationDir": "types",
     "importHelpers": true,
+    "isolatedModules": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "skipLibCheck": true,
     "preserveConstEnums": true,
     "types": [
@@ -33,6 +36,7 @@
   "exclude": [
     "node_modules",
     "lib",
-    "dist"
+    "dist",
+    "types"
   ]
 }
