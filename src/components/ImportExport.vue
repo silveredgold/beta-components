@@ -10,7 +10,7 @@
                     <template #action>
                         <n-space item-style="display: flex;" justify="end" >
                             <n-button @click="exportToBackend" icon-placement="right" v-if="enableBackend">
-                                Export to Beta Safety
+                                Export to Backend
                                 <template #icon>
                                     <n-popover trigger="hover" placement="bottom">
                                         <template #trigger>
@@ -54,21 +54,20 @@ import { computed, toRefs } from 'vue';
 import { NCard, NThing, NGrid, NGridItem, NSpace, NButton, NText, NIcon, NPopover } from "naive-ui";
 import { HelpCircleOutline } from "@vicons/ionicons5";
 import { IPreferences } from '@silveredgold/beta-shared/preferences';
-import { FileSystemClient, useEventEmitter, useOptionalNotification } from '../services';
-import { useBackendTransport } from '../transport';
+import { FileSystemClient } from '../services';
+import { useOptionalNotification, useBackendTransport } from '.';
+import { useEventEmitter } from "../messaging";
 
-interface Props {
-    preferences: IPreferences,
-    enableBackend?: boolean,
-    compact?: boolean
-}
+type ImportExportProps = {
+    preferences: IPreferences
+    enableBackend?: boolean
+};
 
 const emit = defineEmits<{
   (e: 'imported', preferences: IPreferences): void
 }>();
 
-const props = withDefaults(defineProps<Props>(), {
-    compact: false,
+const props = withDefaults(defineProps<ImportExportProps>(), {
     enableBackend: false
 });
 

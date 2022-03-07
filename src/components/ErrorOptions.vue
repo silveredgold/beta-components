@@ -20,10 +20,9 @@ import { watch, toRefs, inject } from 'vue';
 import { NCard, NRadioGroup, NRadioButton } from "naive-ui";
 import { IPreferences } from '@silveredgold/beta-shared/preferences';
 import { updateUserPrefs } from '../messaging';
+import { PreferencesProps } from '.';
 
-const props = defineProps<{
-    preferences: IPreferences
-}>();
+const props = defineProps<PreferencesProps>();
 
 
 const { preferences } = toRefs(props);
