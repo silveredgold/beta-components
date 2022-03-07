@@ -5,8 +5,8 @@
   "author": "silveredgold",
   "license": "GPL-3.0-or-later",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/silveredgold/beta-components.git"
+    "type": "git",
+    "url": "https://github.com/silveredgold/beta-components.git"
   },
   "main": "./lib/beta-shared-components.umd.js",
   "module": "./lib/beta-shared-components.es.js",
@@ -19,7 +19,9 @@
     },
     "./*": "./lib/*"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "dev": "vite",
     "test": "jest",
@@ -52,11 +54,14 @@
     "vue-tsc": "^0.32.1"
   },
   "peerDependencies": {
-      "@silveredgold/beta-shared": "^0.0.1-alpha14",
-      "@vicons/ionicons5": "^0.12.0",
-      "@vicons/utils": "^0.1.4",
-      "mitt": "^3.0.0",
-      "naive-ui": "^2.25.0",
-      "vue": "^3.2.25"
-    }
+    "@silveredgold/beta-shared": "^0.0.1-alpha14",
+    "@vicons/ionicons5": "^0.12.0",
+    "@vicons/utils": "^0.1.4",
+    "mitt": "^3.0.0",
+    "naive-ui": "^2.25.0",
+    "vue": "^3.2.25"
+  },
+  "dependencies": {
+    "tslib": "^2.3.1"
+  }
 }
