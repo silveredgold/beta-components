@@ -59,7 +59,8 @@
     "@vicons/utils": "^0.1.4",
     "mitt": "^3.0.0",
     "naive-ui": "^2.25.0",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "strongly-typed-events": "^2.1.14"
   },
   "dependencies": {
     "tslib": "^2.3.1"
