@@ -81,7 +81,7 @@ export class BatchCensorService {
         results: { id: string, file: { handle: FileSystemFileHandle, url: string } }[],
         inputDir: FileSystemDirectoryHandle,
         subDir?: string,
-        filePrefix?: string
+        filePrefix: string = ''
     ) => {
         const outputDir = subDir ? await inputDir?.getDirectoryHandle(subDir, { create: true }) : inputDir;
         for (const current of results) {
