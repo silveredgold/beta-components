@@ -1,5 +1,6 @@
 /// <reference types="wicg-file-system-access"/>
 
+export type DirectoryFilePayload = {dir: FileSystemDirectoryHandle, files: {[key: string]: LoadedFileHandle[]}};
 
 export class FileSystemClient {
 
@@ -31,11 +32,23 @@ export class FileSystemClient {
         return {dir: dirHandle.name, files: results};
     }
 
-    getDirectoriesandFiles = async (filter?: (file: File) => boolean): Promise<{[key: string]: LoadedFileHandle[]}> => {
+    getDirectoriesandFiles = async (filter?: (file: File) => boolean, rootDirKeyName?: string): Promise<DirectoryFilePayload> => {
         const dirHandle = await window.showDirectoryPicker();
         const getAllHandles = await this.listAllFilesAndDirs(dirHandle);
         const obj: {[key: string]: LoadedFileHandle[]} = {}
+        const rootKey = rootDirKeyName ?? dirHandle.name;
+        console.log('allHandles', getAllHandles.filter(f => f.kind == "file").map(f => { return {name: f.name, parent: f.parent?.name}}));
         for (const handle of getAllHandles) {
+            if (handle.kind == "file" && handle.parent.name == dirHandle.name) {
+                if ((await handle.parent.isSameEntry(dirHandle))) {
+                    const fileHandle = handle.handle as FileSystemFileHandle;
+                    const file = await fileHandle.getFile();
+                    if (obj[rootKey] === undefined) {
+                        obj[rootKey] = [];
+                    }
+                    obj[rootKey].push({handle: fileHandle, file });
+                }
+            }
             if (handle.kind == "directory") {
                 const childRefs = getAllHandles.filter(f => f.kind == "file" && f.parent.name === handle.name);
                 const childHandles = childRefs.map(r => r.handle as FileSystemFileHandle);
@@ -50,10 +63,19 @@ export class FileSystemClient {
                     promises.push(entry.getFile().then((file) => {return {handle: entry, file}}));
                 }
                 const result = await Promise.all(promises);
-                obj[handle.name] = result.filter(r => filter ? filter(r.file) : true);
+                const keyName = await this.getParentPath(dirHandle, handle.handle as FileSystemDirectoryHandle);
+                obj[rootKey + "/" + keyName] = result.filter(r => filter ? filter(r.file) : true);
             }
         }
-        return obj;
+        return {dir: dirHandle, files: obj};
+    }
+
+    getParentPath = async (rootHandle: FileSystemDirectoryHandle, current: FileSystemDirectoryHandle) => {
+        const segments = await rootHandle.resolve(current);
+        if (segments && segments.length > 0) {
+            return segments.join('/');
+        }
+        return current.name;
     }
 
     listAllFilesAndDirs = async (dirHandle: FileSystemDirectoryHandle) => {

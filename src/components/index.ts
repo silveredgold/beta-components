@@ -13,6 +13,7 @@ export { default as ImportExport } from './ImportExport.vue';
 export { default as StatisticsDetail } from './StatisticsDetail.vue';
 export { default as StatisticsHeader } from './StatisticsHeader.vue';
 export { default as VideoOptions } from './VideoOptions.vue';
+export { default as FileImportList } from './FileImportList.vue';
 
 export * from './util';
 
