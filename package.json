@@ -25,7 +25,7 @@
   "scripts": {
     "dev": "vite",
     "test": "jest",
-    "build": "vue-tsc --declaration --emitDeclarationOnly && vite build && copyfiles -u 1 types/**/*.d.ts lib/",
+    "build": "vue-tsc --declaration --emitDeclarationOnly && vite build && copyfiles -u 1 \"types/**/*.d.ts\" lib/",
     "preserve": "vite build",
     "serve": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
