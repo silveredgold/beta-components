@@ -46,7 +46,9 @@ export class FileSystemClient {
                     if (obj[rootKey] === undefined) {
                         obj[rootKey] = [];
                     }
-                    obj[rootKey].push({handle: fileHandle, file });
+                    if (!filter || filter(file)) {
+                        obj[rootKey].push({handle: fileHandle, file });
+                    }
                 }
             }
             if (handle.kind == "directory") {

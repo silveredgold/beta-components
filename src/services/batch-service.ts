@@ -1,6 +1,6 @@
 import { generateUUID } from "@silveredgold/beta-shared";
 import { IPreferences } from "@silveredgold/beta-shared/preferences";
-import { ICensorBackend } from "@silveredgold/beta-shared/transport";
+import { ICensorBackend, ImageCensorRequest, ImageCensorResponse } from "@silveredgold/beta-shared/transport";
 import { DirectoryFile, DirectoryFileList } from "./types";
 import { SimpleEventDispatcher } from "strongly-typed-events";
 import { dataUrlToBlob, verifyPermission } from ".";
@@ -8,13 +8,14 @@ import { log } from "missionlog";
 
 export class BatchCensorService {
     private _backend: ICensorBackend;
+    private _queue: Map<string, DirectoryFile> | undefined;
 
     /**
      *
      */
-    constructor(backend: ICensorBackend) {
+    constructor(backend: ICensorBackend, requestQueue?: Map<string, DirectoryFile>) {
         this._backend = backend;
-
+        this._queue = requestQueue;
     }
 
     startCensoring = async (urls: URL[], preferences: IPreferences): Promise<Map<string, string>> => {
@@ -42,8 +43,16 @@ export class BatchCensorService {
         return queue;
     }
 
-    startCensoringFiles = async (files: DirectoryFileList[], preferences: IPreferences): Promise<Map<string, DirectoryFile>> => {
+    /**
+     * 
+     * @param files The files to be censored
+     * @param preferences The preferences to use when censoring
+     * @param slowMode (deprecated!) Forces service to issue backend requests one-by-one.
+     * @returns The request queue 
+     */
+    startCensoringFiles = async (files: DirectoryFileList[], preferences: IPreferences, slowMode: boolean = false): Promise<Map<string, DirectoryFile>> => {
         const queue = new Map<string, DirectoryFile>();
+        const requests: {request: ImageCensorRequest, file: DirectoryFile}[] = [];
         for (const file of files.flatMap(f => f.files)) {
             const id = generateUUID();
             const blob = file.file;
@@ -65,8 +74,32 @@ export class BatchCensorService {
                     domain: 'local'
                 }
             };
-            queue.set(id, file);
-            await this._backend.censorImage(req);
+            requests.push({request: req, file: file})
+        }
+        if (slowMode) {
+            for (const censor of requests) {
+                queue.set(censor.request.id, censor.file);
+                if (this._queue !== undefined) {
+                    this._queue.set(censor.request.id, censor.file);
+                }
+                await new Promise<ImageCensorResponse|undefined>(async resolve => {
+                    const unsub = this._backend.onImageCensored.sub((sender, event) => {
+                        if (event.id == censor.request.id) {
+                            unsub();
+                            resolve(event);
+                        }
+                    });
+                    this._backend.censorImage(censor.request);
+                });
+            }
+        } else {
+            for (const censor of requests) {
+                queue.set(censor.request.id, censor.file);
+                await this._backend.censorImage(censor.request);
+                if (this._queue !== undefined) {
+                    this._queue.set(censor.request.id, censor.file);
+                }
+            }
         }
         return queue;
     }
