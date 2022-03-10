@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!loadedFiles || loadedFiles.length == 0">
         <n-tooltip trigger="hover" v-if="!!(actionHelpText)">
             <template #trigger>
                 <n-button @click="openDir">{{actionLabel}}</n-button>
