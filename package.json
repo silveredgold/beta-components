@@ -1,6 +1,6 @@
 {
   "name": "@silveredgold/beta-shared-components",
-  "version": "0.0.0-alpha17",
+  "version": "0.0.1-alpha18",
   "description": "The shared Vue components used by Beta Protection.",
   "author": "silveredgold",
   "license": "GPL-3.0-or-later",
