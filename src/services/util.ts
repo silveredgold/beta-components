@@ -1,4 +1,5 @@
-import { DirectoryFile, DirectoryFileList, DirectoryFilePayload } from ".";
+import { DirectoryFilePayload } from "./fs-client";
+import { DirectoryFile, DirectoryFileList } from "./types";
 
 
 export const toFileList = async (result: DirectoryFilePayload) => {
