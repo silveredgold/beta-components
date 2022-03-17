@@ -5,6 +5,44 @@
             <n-tab-pane name="special" tab="Special">
                 <div v-if="prefs && prefs.otherCensoring">
                     <n-form :model="prefs.otherCensoring" label-placement="left" :label-width="120">
+                        <n-form-item label="Male Face" path="maleFace">
+                            <n-input-group class="censor-input-group">
+                                    <n-select
+                                        v-model:value="prefs.otherCensoring.maleFace.method"
+                                        :options="rawCensorTypes"
+                                        class="censor-input"
+                                        :style="{ width: '25%' }"
+                                    />
+                                    <n-slider
+                                        :min="1"
+                                        :max="20"
+                                        v-model:value="prefs.otherCensoring.maleFace.level"
+                                        :marks="sliderMarks"
+                                        :step="1"
+                                        :style="{ width: '50%' }"
+                                        class="censor-input"
+                                    />
+                                </n-input-group>
+                        </n-form-item>
+                        <n-form-item label="Female Face" path="femaleFace">
+                            <n-input-group class="censor-input-group">
+                                    <n-select
+                                        v-model:value="prefs.otherCensoring.femaleFace.method"
+                                        :options="rawCensorTypes"
+                                        :style="{ width: '25%' }"
+                                        class="censor-input"
+                                    />
+                                    <n-slider
+                                        :min="1"
+                                        :max="20"
+                                        v-model:value="prefs.otherCensoring.femaleFace.level"
+                                        :marks="sliderMarks"
+                                        :step="1"
+                                        :style="{ width: '50%' }"
+                                        class="censor-input"
+                                    />
+                                </n-input-group>
+                        </n-form-item>
                         <n-form-item label="Female Eyes" path="femaleEyes">
                             <n-input-group class="censor-input-group">
                                 <n-popover trigger="hover" placement="bottom">
@@ -23,43 +61,23 @@
                                     />
                             </n-input-group>
                         </n-form-item>
-                        <n-form-item label="Female Face" path="femaleFace">
+                        <n-form-item label="Female Mouth" path="femaleMouth">
                             <n-input-group class="censor-input-group">
-                                    <n-select
-                                        v-model:value="prefs.otherCensoring.femaleFace.method"
-                                        :options="rawCensorTypes"
-                                        :style="{ width: '25%' }"
+                                <n-popover trigger="hover" placement="bottom">
+                                    <template v-slot:trigger>
+                                        <n-icon style="margin-top: auto; margin-bottom: auto;" :component="HelpCircleOutline" :size="20" />
+                                    </template>
+                                    <n-thing title="Experimental Feature!" style="max-width: 20rem;">
+                                        Mouth detection is not a part of the NudeNet model so not all backends may support it! Additionally, the accuracy or performance may be worse than other supported parts.
+                                    </n-thing>
+                                </n-popover>
+                                <n-select
+                                        v-model:value="prefs.otherCensoring.femaleMouth"
+                                        :options="eyeCensorTypes"
+                                        :style="{ width: '75%' }"
                                         class="censor-input"
                                     />
-                                    <n-slider
-                                        :min="1"
-                                        :max="22"
-                                        v-model:value="prefs.otherCensoring.femaleFace.level"
-                                        :marks="sliderMarks"
-                                        :step="1"
-                                        :style="{ width: '50%' }"
-                                        class="censor-input"
-                                    />
-                                </n-input-group>
-                        </n-form-item>
-                        <n-form-item label="Male Face" path="maleFace">
-                            <n-input-group class="censor-input-group">
-                                    <n-select
-                                        v-model:value="prefs.otherCensoring.maleFace.method"
-                                        :options="rawCensorTypes"
-                                        class="censor-input"
-                                        :style="{ width: '25%' }"
-                                    />
-                                    <n-slider
-                                        :min="1"
-                                        :max="22"
-                                        v-model:value="prefs.otherCensoring.maleFace.level"
-                                        :marks="sliderMarks"
-                                        :step="1"
-                                        :style="{ width: '50%' }"
-                                        class="censor-input"
-                                    />
-                                </n-input-group>
+                            </n-input-group>
                         </n-form-item>
                     </n-form>
                     <n-card size="small">
@@ -96,7 +114,7 @@
                                     />
                                     <n-slider
                                         :min="1"
-                                        :max="22"
+                                        :max="20"
                                         v-model:value="((prefs as any)[mode][name] as CensorMode).level"
                                         :marks="sliderMarks"
                                         :step="1"
@@ -133,7 +151,7 @@ const notif = useNotification();
 
 const sliderMarks = {
     1: "Very Light",
-    22: "Very Heavy"
+    20: "Very Heavy"
 }
 const { preferences } = toRefs(props);
 const prefs = preferences;
@@ -141,6 +159,7 @@ const updatePrefs = inject(updateUserPrefs, undefined);
 
 const rawCensorTypes = getCensorTypes();
 
+// yes I made the beta-shared API use 'Box' like an idiot
 const eyeCensorTypes = [{label: 'Nothing', value: 'None'}, {label: 'Black Bars', value: 'Box'}, {label: 'Sticker', value: 'Sticker'}];
 
 watch(prefs, async (newMode, prevMode) => {

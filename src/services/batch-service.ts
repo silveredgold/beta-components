@@ -18,8 +18,9 @@ export class BatchCensorService {
         this._queue = requestQueue;
     }
 
-    startCensoring = async (urls: URL[], preferences: IPreferences): Promise<Map<string, string>> => {
+    startCensoring = async (urls: URL[], preferences: IPreferences, requestQueue?: Map<string, string>): Promise<Map<string, string>> => {
         const queue = new Map<string, string>();
+        const requests: {request: ImageCensorRequest, file: string}[] = [];
         for (const url of urls) {
             const id = generateUUID();
             var req = {
@@ -32,13 +33,19 @@ export class BatchCensorService {
                     type: 'normal'
                 },
                 context: {
-                    domain: 'local'
+                    domain: 'remote'
                 }
             };
-            const name = url.pathname.split(/[\\/]/).pop()!;
             //TODO: this needs sanitization
-            queue.set(id, name);
-            await this._backend.censorImage(req);
+            const name = url.pathname.split(/[\\/]/).pop()!;
+            requests.push({request: req, file: name})
+        }
+        for (const censor of requests) {
+            queue.set(censor.request.id, censor.file);
+            await this._backend.censorImage(censor.request);
+            if (requestQueue !== undefined) {
+                requestQueue.set(censor.request.id, censor.file);
+            }
         }
         return queue;
     }
