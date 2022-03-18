@@ -43,16 +43,19 @@
                                     />
                                 </n-input-group>
                         </n-form-item>
-                        <n-form-item label="Female Eyes" path="femaleEyes">
+                        <n-form-item path="femaleEyes">
+                            <template #label>
+                                Female Eyes
+                                <n-popover trigger="hover" placement="bottom">
+                                    <template v-slot:trigger>
+                                        <n-icon :component="AlertCircleOutline" :size="20" />
+                                    </template>
+                                    <n-thing title="Experimental Feature!" style="max-width: 20rem;">
+                                        Facial feature detection is not a part of the NudeNet model so not all backends may support it! Additionally, the accuracy or performance may be worse than other supported parts.
+                                    </n-thing>
+                                </n-popover>
+                            </template>
                             <n-input-group class="censor-input-group">
-                                    <n-popover trigger="hover" placement="bottom">
-                                        <template v-slot:trigger>
-                                            <n-icon style="margin-top: auto; margin-bottom: auto;" :component="HelpCircleOutline" :size="20" />
-                                        </template>
-                                        <n-thing title="Experimental Feature!" style="max-width: 20rem;">
-                                            Eye detection is not a part of the NudeNet model so not all backends may support it! Additionally, the accuracy or performance may be worse than other supported parts.
-                                        </n-thing>
-                                    </n-popover>
                                     <n-select
                                         v-model:value="prefs.otherCensoring.femaleEyes.method"
                                         :options="rawCensorTypes"
@@ -70,16 +73,19 @@
                                     />
                                 </n-input-group>
                         </n-form-item>
-                        <n-form-item label="Female Mouth" path="femaleMouth">
+                        <n-form-item path="femaleMouth">
+                            <template #label>
+                                Female Mouth
+                                <n-popover trigger="hover" placement="bottom">
+                                    <template v-slot:trigger>
+                                        <n-icon :component="AlertCircleOutline" :size="20" />
+                                    </template>
+                                    <n-thing title="Experimental Feature!" style="max-width: 20rem;">
+                                        Facial feature detection is not a part of the NudeNet model so not all backends may support it! Additionally, the accuracy or performance may be worse than other supported parts.
+                                    </n-thing>
+                                </n-popover>
+                            </template>
                             <n-input-group class="censor-input-group">
-                                    <n-popover trigger="hover" placement="bottom">
-                                        <template v-slot:trigger>
-                                            <n-icon style="margin-top: auto; margin-bottom: auto;" :component="HelpCircleOutline" :size="20" />
-                                        </template>
-                                        <n-thing title="Experimental Feature!" style="max-width: 20rem;">
-                                            Eye detection is not a part of the NudeNet model so not all backends may support it! Additionally, the accuracy or performance may be worse than other supported parts.
-                                        </n-thing>
-                                    </n-popover>
                                     <n-select
                                         v-model:value="prefs.otherCensoring.femaleMouth.method"
                                         :options="rawCensorTypes"
@@ -155,7 +161,7 @@
 <script setup lang="ts">
 import { inject, toRefs, watch } from 'vue';
 import { NCard, useNotification, NTabs, NTabPane, NSpace, NForm, NFormItem, NSelect, NInputGroup, NSlider, NThing, NCheckbox, NPopover, NIcon } from "naive-ui";
-import { HelpCircleOutline } from "@vicons/ionicons5";
+import { AlertCircleOutline, HelpCircleOutline } from "@vicons/ionicons5";
 import { IPreferences, CensorType, getCensorTypes } from '@silveredgold/beta-shared/preferences';
 import type { BodyCensorModes, CensorMode } from '@silveredgold/beta-shared/preferences';
 import { updateUserPrefs } from "../messaging";
