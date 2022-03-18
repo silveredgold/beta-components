@@ -45,39 +45,57 @@
                         </n-form-item>
                         <n-form-item label="Female Eyes" path="femaleEyes">
                             <n-input-group class="censor-input-group">
-                                <n-popover trigger="hover" placement="bottom">
-                                    <template v-slot:trigger>
-                                        <n-icon style="margin-top: auto; margin-bottom: auto;" :component="HelpCircleOutline" :size="20" />
-                                    </template>
-                                    <n-thing title="Experimental Feature!" style="max-width: 20rem;">
-                                        Eye detection is not a part of the NudeNet model so not all backends may support it! Additionally, the accuracy or performance may be worse than other supported parts.
-                                    </n-thing>
-                                </n-popover>
-                                <n-select
-                                        v-model:value="prefs.otherCensoring.femaleEyes"
-                                        :options="eyeCensorTypes"
-                                        :style="{ width: '75%' }"
+                                    <n-popover trigger="hover" placement="bottom">
+                                        <template v-slot:trigger>
+                                            <n-icon style="margin-top: auto; margin-bottom: auto;" :component="HelpCircleOutline" :size="20" />
+                                        </template>
+                                        <n-thing title="Experimental Feature!" style="max-width: 20rem;">
+                                            Eye detection is not a part of the NudeNet model so not all backends may support it! Additionally, the accuracy or performance may be worse than other supported parts.
+                                        </n-thing>
+                                    </n-popover>
+                                    <n-select
+                                        v-model:value="prefs.otherCensoring.femaleEyes.method"
+                                        :options="rawCensorTypes"
+                                        class="censor-input"
+                                        :style="{ width: '25%' }"
+                                    />
+                                    <n-slider
+                                        :min="1"
+                                        :max="20"
+                                        v-model:value="prefs.otherCensoring.femaleEyes.level"
+                                        :marks="sliderMarks"
+                                        :step="1"
+                                        :style="{ width: '50%' }"
                                         class="censor-input"
                                     />
-                            </n-input-group>
+                                </n-input-group>
                         </n-form-item>
                         <n-form-item label="Female Mouth" path="femaleMouth">
                             <n-input-group class="censor-input-group">
-                                <n-popover trigger="hover" placement="bottom">
-                                    <template v-slot:trigger>
-                                        <n-icon style="margin-top: auto; margin-bottom: auto;" :component="HelpCircleOutline" :size="20" />
-                                    </template>
-                                    <n-thing title="Experimental Feature!" style="max-width: 20rem;">
-                                        Mouth detection is not a part of the NudeNet model so not all backends may support it! Additionally, the accuracy or performance may be worse than other supported parts.
-                                    </n-thing>
-                                </n-popover>
-                                <n-select
-                                        v-model:value="prefs.otherCensoring.femaleMouth"
-                                        :options="eyeCensorTypes"
-                                        :style="{ width: '75%' }"
+                                    <n-popover trigger="hover" placement="bottom">
+                                        <template v-slot:trigger>
+                                            <n-icon style="margin-top: auto; margin-bottom: auto;" :component="HelpCircleOutline" :size="20" />
+                                        </template>
+                                        <n-thing title="Experimental Feature!" style="max-width: 20rem;">
+                                            Eye detection is not a part of the NudeNet model so not all backends may support it! Additionally, the accuracy or performance may be worse than other supported parts.
+                                        </n-thing>
+                                    </n-popover>
+                                    <n-select
+                                        v-model:value="prefs.otherCensoring.femaleMouth.method"
+                                        :options="rawCensorTypes"
+                                        class="censor-input"
+                                        :style="{ width: '25%' }"
+                                    />
+                                    <n-slider
+                                        :min="1"
+                                        :max="20"
+                                        v-model:value="prefs.otherCensoring.femaleMouth.level"
+                                        :marks="sliderMarks"
+                                        :step="1"
+                                        :style="{ width: '50%' }"
                                         class="censor-input"
                                     />
-                            </n-input-group>
+                                </n-input-group>
                         </n-form-item>
                     </n-form>
                     <n-card size="small">
