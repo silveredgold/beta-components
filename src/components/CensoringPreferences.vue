@@ -103,6 +103,7 @@
                                     />
                                 </n-input-group>
                         </n-form-item>
+                        <slot name="other"></slot>
                     </n-form>
                     <n-card size="small">
                     <n-thing>

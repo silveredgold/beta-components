@@ -16,7 +16,8 @@
                                         <template #trigger>
                                             <n-icon :component="HelpCircleOutline" />
                                         </template>
-                                        This will update your censoring backend's preferences to match your preferences here.
+                                        This will update your censoring backend's preferences to match your preferences here (if supported). 
+                                        Not all backends support this feature.
                                     </n-popover>
                                 </template>
                             </n-button>
