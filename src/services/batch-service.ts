@@ -2,7 +2,7 @@ import { generateUUID } from "@silveredgold/beta-shared";
 import { IPreferences } from "@silveredgold/beta-shared/preferences";
 import { ICensorBackend, ImageCensorRequest, ImageCensorResponse } from "@silveredgold/beta-shared/transport";
 import { DirectoryFile, DirectoryFileList } from "./types";
-import { SimpleEventDispatcher } from "@silveredgold/ste-simple-events";
+import { SimpleEventDispatcher } from "ste-simple-events";
 import { dataUrlToBlob, verifyPermission } from "./util";
 import { log } from "missionlog";
 

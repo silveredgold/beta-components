@@ -15,6 +15,7 @@ export { default as StatisticsHeader } from './StatisticsHeader.vue';
 export { default as VideoOptions } from './VideoOptions.vue';
 export { default as FileImportList } from './FileImportList.vue';
 export { default as FileList } from './FileList.vue';
+export { default as ExperimentalOption } from './ExperimentalOption.vue';
 export type { IFileEntry } from './FileList.vue'
 export { default as RequestQueue } from './RequestQueue.vue';
 export type { IRequestState } from './RequestQueue.vue';
