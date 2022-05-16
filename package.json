@@ -32,7 +32,7 @@
     "types": "vue-tsc --declaration --emitDeclarationOnly"
   },
   "devDependencies": {
-    "@silveredgold/beta-shared": "^0.0.1-alpha30",
+    "@silveredgold/beta-shared": "^0.0.1-alpha32",
     "@types/jest": "^27.0.3",
     "@types/wicg-file-system-access": "^2020.9.5",
     "@vicons/ionicons5": "^0.12.0",

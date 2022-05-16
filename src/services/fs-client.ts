@@ -55,12 +55,12 @@ export class FileSystemClient {
                 const childRefs = getAllHandles.filter(f => f.kind == "file" && f.parent.name === handle.name);
                 const childHandles = childRefs.map(r => r.handle as FileSystemFileHandle);
                 if (childHandles.length == 0) {
-                    break;
+                    continue;
                 }
                 const promises: Promise<LoadedFileHandle>[] = [];
                 for await (const entry of childHandles) {
                     if (entry.kind !== 'file') {
-                        break;
+                        continue;
                     }
                     promises.push(entry.getFile().then((file) => {return {handle: entry, file}}));
                 }
