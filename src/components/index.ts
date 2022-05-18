@@ -18,6 +18,8 @@ export { default as FileList } from './FileList.vue';
 export { default as ExperimentalOption } from './ExperimentalOption.vue';
 export type { IFileEntry } from './FileList.vue'
 export { default as RequestQueue } from './RequestQueue.vue';
+export { default as HelpTooltip } from './HelpTooltip.vue';
+export { default as PreviewFeature } from './PreviewFeature.vue';
 export type { IRequestState } from './RequestQueue.vue';
 
 export * from './util';
