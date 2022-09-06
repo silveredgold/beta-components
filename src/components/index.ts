@@ -1,8 +1,9 @@
 import { inject, InjectionKey } from "vue";
-import { NotificationApiInjection, notificationApiInjectionKey } from 'naive-ui/lib/notification/src/NotificationProvider';
+import { NotificationApiInjection } from 'naive-ui/lib/notification/src/NotificationProvider';
 import { IPreferences } from '@silveredgold/beta-shared/preferences';
 import { ICensorBackend } from "@silveredgold/beta-shared/transport";
 import { throwError } from "../util";
+import { useNotification } from "naive-ui";
 
 /* eslint-disable import/prefer-default-export */
 export { default as CensoringPreferences } from './CensoringPreferences.vue';
@@ -31,8 +32,8 @@ export type PreferencesProps = {
 }
 
 export function useOptionalNotification(): NotificationApiInjection|undefined {
-    const notif = inject(notificationApiInjectionKey, undefined);
-    return notif;
+    const notif = useNotification();
+    return notif || undefined;
 }
 
 
