@@ -1,21 +1,15 @@
 <template>
     <n-thing :title="title" style="margin: 1rem;">
-        <n-data-table
-            :columns="columns"
-            :data="requests"
-            :pagination="pagination"
-            :row-key="idAsKey"
-            :bordered="false"
-            style="margin-bottom: 1.5em;"
-        />
+        <n-data-table :columns="columns" :data="requests" :pagination="pagination" :row-key="idAsKey" :bordered="false"
+            style="margin-bottom: 1.5em;" />
         <template #header-extra>
             <slot name="action"></slot>
         </template>
     </n-thing>
 </template>
 <script setup lang="ts">
-import { DataTableColumns, NIcon, NIconWrapper, NDataTable, useThemeVars, DataTableCreateSummary, NThing, NSpin, NSpace, NPopover, NButton } from 'naive-ui';
-import { computed, h, reactive, toRefs, useSlots } from 'vue';
+import { DataTableColumns, NIcon, NDataTable, useThemeVars, NThing, NSpin, NSpace, NPopover, NButton } from 'naive-ui';
+import { computed, h, reactive, toRefs } from 'vue';
 import { Stop } from "@vicons/ionicons5";
 import { stateIcon, wrappedIcon } from './fragments';
 
@@ -41,7 +35,6 @@ const emit = defineEmits<{
 
 
 const { title, requests, enableCancel } = toRefs(props);
-// const slots = useSlots();
 
 const themeVars = useThemeVars();
 
@@ -55,7 +48,7 @@ const columns = computed(() => {
         baseColumns.push({
             type: 'expand',
             expandable: (rowData) => rowData.name !== undefined && rowData.id !== undefined,
-            renderExpand: enableCancel?.value === true ? renderCancelExpander : (rowData) => `Request ID: ${rowData.id}`
+            renderExpand: enableCancel?.value === true ? renderCancelExpander :  (rowData) => `Request ID: ${rowData.id}`
         }, {
             title: "Name",
             key: 'name'
