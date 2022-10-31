@@ -9,7 +9,7 @@
     "url": "https://github.com/silveredgold/beta-components.git"
   },
   "main": "./lib/beta-shared-components.umd.js",
-  "module": "./lib/beta-shared-components.es.js",
+  "module": "./lib/beta-shared-components.mjs",
   "types": "./lib/index.d.ts",
   "exports": {
     ".": {
