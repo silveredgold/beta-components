@@ -37,17 +37,15 @@ import { computed, ref, Ref, toRefs } from 'vue';
 import { humanFileSize } from "@silveredgold/beta-shared";
 import { TreeOption, NTooltip, NButton, NCard, NTree, NThing } from 'naive-ui';
 
-export interface Props {
-    actionLabel?: string
-    actionHelpText?: string,
-    submitHelpText?: string
-};
-
 const emit = defineEmits<{
     (e: 'filesLoaded', dir: FileSystemDirectoryHandle, files: DirectoryFileList[]): void
 }>();
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<{
+    actionLabel?: string
+    actionHelpText?: string,
+    submitHelpText?: string
+}>(), {
     actionLabel: 'Import Files...'
 });
 

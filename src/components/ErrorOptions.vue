@@ -22,6 +22,7 @@ import { watch, toRefs, inject, computed } from 'vue';
 import { NCard, NRadioGroup, NRadioButton } from "naive-ui";
 import { updateUserPrefs } from '../messaging';
 import { IPreferences } from '@silveredgold/beta-shared/preferences';
+import { watchForChanges } from ".";
 
 const props = withDefaults(defineProps<{
     preferences: IPreferences,
@@ -33,8 +34,6 @@ const availableModes = computed(() => allowNone.value ? ['Subtle', 'Normal', 'No
 const prefs = preferences;
 const updatePrefs = inject(updateUserPrefs, undefined);
 
-watch(prefs, async (newMode, prevMode) => {
-    updatePrefs?.();
-}, { deep: true });
+watch(prefs, watchForChanges(updatePrefs), {deep: true})
 
 </script>

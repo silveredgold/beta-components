@@ -42,7 +42,7 @@ import { watch, computed, toRefs, inject } from 'vue';
 import { NCard, NRadioGroup, NRadioButton, NThing, NSpace, NCheckbox, NSlider } from "naive-ui";
 import { IPreferences } from '@silveredgold/beta-shared/preferences';
 import { updateUserPrefs } from '../messaging';
-import { PreferencesProps } from '.';
+import { PreferencesProps, watchForChanges } from '.';
 
 const props = withDefaults(defineProps<PreferencesProps>(), {
     compact: false
@@ -54,8 +54,6 @@ const updatePrefs = inject(updateUserPrefs, undefined);
 
 const loaded = computed(() => prefs.value !== undefined);
 
-watch(prefs, async (newMode, prevMode) => {
-    updatePrefs?.();
-}, {deep: true});
+watch(prefs, watchForChanges(updatePrefs), {deep: true});
 
 </script>

@@ -167,6 +167,7 @@ import { IPreferences, CensorType, getCensorTypes } from '@silveredgold/beta-sha
 import type { BodyCensorModes, CensorMode } from '@silveredgold/beta-shared/preferences';
 import { updateUserPrefs } from "../messaging";
 import { toTitleCase } from "@silveredgold/beta-shared";
+import { watchForChanges } from '.';
 
 const props = defineProps<{
     preferences: IPreferences
@@ -187,10 +188,7 @@ const rawCensorTypes = getCensorTypes();
 // yes I made the beta-shared API use 'Box' like an idiot
 const eyeCensorTypes = [{label: 'Nothing', value: 'None'}, {label: 'Black Bars', value: 'Box'}, {label: 'Sticker', value: 'Sticker'}];
 
-watch(prefs, async (newMode, prevMode) => {
-    // console.log(`prefs watch: ${prevMode}->${newMode}`);
-    updatePrefs?.();
-}, {deep: true});
+watch(prefs, watchForChanges(updatePrefs), {deep: true})
 
 </script>
 <style>
