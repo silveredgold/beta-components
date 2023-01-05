@@ -1,6 +1,6 @@
 import { IPreferences } from "@silveredgold/beta-shared/preferences";
 import { isEqual } from "lodash";
-import { unref, WatchCallback } from "vue";
+import { toRaw, unref, WatchCallback } from "vue";
 
 export interface INavigationService {
     openSettings: () => void;
@@ -16,8 +16,8 @@ export type HostConfigurator = {
 
 export const watchForChanges = (cb?: (prefs?: IPreferences) => any, guard?: () => boolean): WatchCallback<IPreferences, IPreferences> => {
     return async (newValue, oldValue) => {
-        let oldVal = unref(oldValue);
-        let newVal = unref(newValue);
+        let oldVal = toRaw(oldValue);
+        let newVal = toRaw(newValue);
         console.debug('checking preferences object for changes', {new: newVal, old: oldVal});
         if (!!oldVal && !!newVal && !isEqual(oldVal, newVal)) {
             console.debug('changes detected, checking against guard', newVal);
