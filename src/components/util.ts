@@ -14,12 +14,13 @@ export type HostConfigurator = {
     getBackendHost:() => Promise<string>
 };
 
-export const watchForChanges = (cb?: (prefs?: IPreferences) => any, guard?: () => boolean): WatchCallback<IPreferences, IPreferences> => {
+export const watchForChanges = (checkEqual?: boolean, cb?: (prefs?: IPreferences) => any, guard?: () => boolean): WatchCallback<IPreferences, IPreferences> => {
     return async (newValue, oldValue) => {
         let oldVal = toRaw(oldValue);
         let newVal = toRaw(newValue);
         console.debug('checking preferences object for changes', {new: newVal, old: oldVal});
-        if (!!oldVal && !!newVal && !isEqual(oldVal, newVal)) {
+        // if (!!oldVal && !!newVal && !isEqual(oldVal, newVal)) {
+        if (!!oldVal && !!newVal && (!checkEqual || !isEqual(oldVal, newVal))) {
             console.debug('changes detected, checking against guard', newVal);
             guard ??= () => true;
             if (guard()) {

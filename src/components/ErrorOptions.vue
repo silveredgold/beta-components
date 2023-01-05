@@ -34,6 +34,6 @@ const availableModes = computed(() => allowNone.value ? ['Subtle', 'Normal', 'No
 const prefs = preferences;
 const updatePrefs = inject(updateUserPrefs, undefined);
 
-watch(prefs, watchForChanges(updatePrefs), {deep: true})
+watch(prefs, watchForChanges(false, updatePrefs), {deep: true})
 
 </script>

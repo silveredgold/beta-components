@@ -188,7 +188,7 @@ const rawCensorTypes = getCensorTypes();
 // yes I made the beta-shared API use 'Box' like an idiot
 const eyeCensorTypes = [{label: 'Nothing', value: 'None'}, {label: 'Black Bars', value: 'Box'}, {label: 'Sticker', value: 'Sticker'}];
 
-watch(prefs, watchForChanges(updatePrefs), {deep: true})
+watch(prefs, watchForChanges(false, updatePrefs), {deep: true})
 
 </script>
 <style>

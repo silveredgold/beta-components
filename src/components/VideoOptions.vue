@@ -54,6 +54,6 @@ const updatePrefs = inject(updateUserPrefs, undefined);
 
 const loaded = computed(() => prefs.value !== undefined);
 
-watch(prefs, watchForChanges(updatePrefs), {deep: true});
+watch(prefs, watchForChanges(false, updatePrefs), {deep: true});
 
 </script>
